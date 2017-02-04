@@ -1,0 +1,58 @@
+<md-content layout="column" flex>
+    <div layout-fill layout="column">
+        <div class="filter_container">
+            <div layout="row" flex>
+                <mdp-date-picker mdp-placeholder="Дата з"
+                                 mdp-format="DD/MM/YYYY"
+                                 ng-model="state.filter.from"
+                                 ng-change="changeFilter()"></mdp-date-picker>
+                <mdp-time-picker mdp-placeholder="Час" 
+                                 ng-model="state.filter.from"
+                                 ng-change="changeFilter()"></mdp-time-picker>
+            </div>
+            <div layout="row" flex>
+                <mdp-date-picker mdp-placeholder="Дата по"
+                                 mdp-format="DD/MM/YYYY"
+                                 ng-model="state.filter.to"
+                                 ng-change="changeFilter()"></mdp-date-picker>
+                <mdp-time-picker mdp-placeholder="Час" 
+                                 ng-model="state.filter.to"
+                                 ng-change="changeFilter()"></mdp-time-picker>
+            </div>
+            <br/>
+            <md-input-container class="md-block"
+                                flex>
+                <label>Менеджери</label>
+                <md-select ng-model="state.filter.manager"
+                           ng-change="changeFilter()"
+                           multiple>
+                    <md-option ng-repeat="manager in directory.managers" ng-value="manager">
+                        {{manager.name}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <br/>
+            <md-input-container class="md-block"
+                                flex>
+                <label>Вигляд</label>
+                <md-select ng-model="state.chartType">
+                    <md-option ng-repeat="chType in directory.chartTypes" ng-value="chType">
+                        {{chType}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <p>Звіти:</p>
+            <md-radio-group ng-model="state.chartData">
+
+                <md-radio-button ng-value="clientDataT">Типи клієнтів</md-radio-button>
+                <md-radio-button ng-value="clientDataS">Статуси клієнтів</md-radio-button>
+                <md-radio-button ng-value="taskDataT">Типи Задач</md-radio-button>
+                <md-radio-button ng-value="taskDataS">Статуси Задач</md-radio-button>
+                <md-radio-button ng-value="dealDataT">Типи Угод</md-radio-button>
+                <md-radio-button ng-value="dealDataS">Статуси Угод</md-radio-button>
+
+            </md-radio-group>
+        </div>
+        
+    </div>
+</md-content>

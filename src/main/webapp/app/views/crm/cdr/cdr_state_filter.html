@@ -1,0 +1,42 @@
+<md-content layout="column" flex>
+    <div layout-fill layout="column">
+        <div class="filter_container">
+            <md-input-container class="md-block" flex>
+                <label>Номер</label>
+                <input ng-model="state.filter.filter"
+                       ng-change ="changeFilter()">
+            </md-input-container>
+            <div layout="row" flex>
+                <mdp-date-picker mdp-placeholder="Дата з"
+                                 mdp-format="DD/MM/YYYY"
+                                 ng-model="state.filter.from"
+                                 ng-change="changeFilter()"></mdp-date-picker>
+                <mdp-time-picker mdp-placeholder="Час" 
+                                 ng-model="state.filter.from"
+                                 ng-change="changeFilter()"></mdp-time-picker>
+            </div>
+            <div layout="row" flex>
+                <mdp-date-picker mdp-placeholder="Дата по"
+                                 mdp-format="DD/MM/YYYY"
+                                 ng-model="state.filter.to"
+                                 ng-change="changeFilter()"></mdp-date-picker>
+                <mdp-time-picker mdp-placeholder="Час" 
+                                 ng-model="state.filter.to"
+                                 ng-change="changeFilter()"></mdp-time-picker>
+            </div>
+            <br/>
+            <md-input-container class="md-block"
+                                flex>
+                <label>Менеджери</label>
+                <md-select ng-model="state.filter.manager"
+                           ng-change="changeFilter()"
+                           multiple>
+                    <md-option ng-repeat="manager in directory.managers" ng-value="manager">
+                        {{manager.name}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        
+    </div>
+</md-content>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<div layout="row"
+     ng-init="initReports()">
+    <div>
+        <md-menu>
+            <md-button class="md-fab md-mini"
+                       ng-click="main.openMenu($mdOpenMenu, $event)"
+                       style="margin-right: 0px;">
+                <md-icon class="material-icons">menu</md-icon>
+            </md-button>
+            <md-menu-content width="4">
+                <md-menu-item>
+                    <md-button ng-click="reloadList()">
+                        <md-icon class="material-icons">cached</md-icon> обновити
+                    </md-button>
+                </md-menu-item>
+                <md-menu-divider></md-menu-divider>
+                <md-menu-item>
+                    <md-button ng-click="state.enableFilter=!state.enableFilter">
+                        <md-icon class="material-icons">search</md-icon>
+                        {{state.enableFilter ? 'Заховати' : 'Показати' }} панель фільтрів
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+    <div flex>
+        <md-chips ng-model="filterChips" 
+                  readonly="true"
+                  md-removable ="true"
+                  md-on-remove = "deleteChips($chip, $index)">
+            <md-chip-template>
+                <span>
+                    {{$chip.name}}
+                </span>
+            </md-chip-template>
+        </md-chips>
+    </div>
+</div>
+<div layout="row" flex class="main_container">
+    <div ui-view="filter"
+         layout="column"
+         class="filter_outer_container"
+         ng-show="state.enableFilter">
+    </div>
+    <div layout="column" 
+         layout-align="center center"
+         flex>
+        <div ac-chart="state.chartType" 
+             ac-data="state.chartData" 
+             ac-config="chartConfig"
+             flex
+             class="my_chart_500"></div> 
+    </div>
+</div>

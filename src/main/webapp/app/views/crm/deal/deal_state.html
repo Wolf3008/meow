@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<div layout="row">
+    <div>
+        <md-menu>
+            <md-button class="md-fab md-mini"
+                       ng-click="main.openMenu($mdOpenMenu, $event)"
+                       style="margin-right: 0px;">
+                <md-icon class="material-icons">menu</md-icon>
+            </md-button>
+            <md-menu-content width="4">
+                <md-menu-item>
+                    <md-button ng-click="taskService.showAddNewTaskDialog({deals:state.selectedDeals})">
+                        <md-icon class="material-icons">alarm_add</md-icon> Задача
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="reloadList()">
+                        <md-icon class="material-icons">cached</md-icon> обновити
+                    </md-button>
+                </md-menu-item>
+                <md-menu-divider></md-menu-divider>
+                <md-menu-item>
+                    <md-button ng-click="state.enableFilter=!state.enableFilter">
+                        <md-icon class="material-icons">search</md-icon>
+                        {{state.enableFilter ? 'Заховати' : 'Показати' }} панель фільтрів
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+    <div flex>
+        <md-chips ng-model="filterChips" 
+                  readonly="true"
+                  md-removable ="true"
+                  md-on-remove = "deleteChips($chip, $index)">
+            <md-chip-template>
+                <span>
+                    {{$chip.name}}
+                </span>
+            </md-chip-template>
+        </md-chips>
+    </div>
+</div>
+<div layout="row" flex class="main_container">
+    <div ui-view="filter"
+         layout="column"
+         class="filter_outer_container"
+         ng-show="state.enableFilter">
+    </div>
+    <div layout="column" 
+         layout-align="top"
+         flex>
+        <md-virtual-repeat-container id="vertical-container" flex>
+            <md-list flex>
+                <div md-virtual-repeat="item in dynamicItems"
+                     md-on-demand >
+                    <md-list-item class="md-3-line" 
+                                  ng-click="dealService.showAddDealDialog(item, reloadList, true)">
+                        <md-icon class="material-icons md-avatar-icon">attach_money</md-icon>
+                        <div layout="row"
+                             flex
+                             style="min-width: 0;">
+                            <div flex="40">
+                                <div class="md-list-item-text">
+                                    <h3>№{{item.id}}</h3>
+                                    <h4>{{item.name}}</h4>
+                                    <p class="one_line_text">{{item.comment}}</p>
+                                </div>
+                            </div>
+                            <div class="md-list-item-text" 
+                                 layout="column"
+                                 flex="30">
+                                <h4>Ціна: {{item.cost}}</h4>
+                                <h4>Створена: {{item.dtIn | date:"dd.MM.yyyy HH:mm"}}</h4>
+                            </div>
+                            <div class="md-list-item-text" 
+                                 layout="column"
+                                 flex>
+                                <h4>Тип: {{item.type.name}}</h4>
+                                <h4>Статус: {{item.state.name}}</h4>
+                            </div>
+                        </div>
+                        <md-checkbox ng-model="item.selected"
+                                     ng-change="selectDeal(item)"></md-checkbox>
+                    </md-list-item>
+                    <md-divider></md-divider>
+                </div>
+            </md-list>
+        </md-virtual-repeat-container>
+    </div>
+</div>
+<md-sidenav class="md-sidenav-right md-whiteframe-4dp client_card" 
+            md-component-id="right">
+    <div ui-view="body"
+         layout="column"
+         flex
+         layout-fill>
+        
+    </div>
+</md-sidenav>

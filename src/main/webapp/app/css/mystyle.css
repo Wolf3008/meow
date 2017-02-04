@@ -1,0 +1,261 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 2, 2016, 10:21:40 PM
+    Author     : wolf
+*/
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../bower_components/material-design-icons_/iconfont/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url(../bower_components/material-design-icons_/iconfont/MaterialIcons-Regular.woff2) format('woff2'),
+       url(../bower_components/material-design-icons_/iconfont/MaterialIcons-Regular.woff) format('woff'),
+       url(../bower_components/material-design-icons_/iconfont/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+.meow_icon{
+    /*height: 95%;*/
+    height: 65px;
+}
+
+.meow_left_panel{
+    background-color: #222;
+}
+.meow_left_panel_{
+    /*z-index: 1009;*/
+    z-index: 78;
+}
+.md-select-menu-container{
+    /*z-index: 1010;*/
+    z-index: 81;
+}
+.meow_left_panel_ button{
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+}
+
+
+.main_btn{
+    height: 88px;
+    
+/*    border-bottom-width: 1px;
+    border-style: solid;
+    border-radius: initial;
+    border-color: #5A5A5A;*/
+}
+
+.main_btn:hover{
+/*    color: white;
+    text-shadow: 0 0 3px #00FF00;*/
+    text-shadow: 0 0 10px rgba(255,255,255,1) , 0 0 20px rgba(255,255,255,1) , 0 0 30px rgba(255,255,255,1) , 0 0 40px #00ffff , 0 0 70px #00ffff , 0 0 80px #00ffff , 0 0 100px #00ffff ;
+}
+.main_btn_on{
+    background-color: rgba(0, 0, 0, 0.15);
+    text-shadow: 0 0 10px rgba(255,255,255,1) , 0 0 20px rgba(255,255,255,1) , 0 0 30px rgba(255,255,255,1) , 0 0 40px #00ffff , 0 0 70px #00ffff , 0 0 80px #00ffff , 0 0 100px #00ffff ;
+}
+
+.main_header{
+    
+    color: #989898;
+    height: 84px;
+    background-image: -webkit-linear-gradient(top, #3c3c3c 0%, #222 100%);
+    background-image: -o-linear-gradient(top, #3c3c3c 0%, #222 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#3c3c3c), to(#222));
+    background-image: linear-gradient(to bottom, #3c3c3c 0%, #222 100%);
+}
+
+.main_header h3{
+    margin-left: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.filter_panel{
+    background-color: #DADADA;
+}
+
+.panel-group .panel + .panel {
+     margin-top: 0px; 
+}
+/*
+div > [layout-fill]{
+  min-height: 0;
+}*/
+/*.column {
+  flex-direction: column;
+  height: calc(100% - 20px);    new 
+}*/
+
+md-tabs.stretch-height md-tab-content>div{
+    margin: 0;
+    width: 100%;
+    min-height: 100%;
+    height: 100%;
+}
+
+
+.client_card, .client_card.md-locked-open, .client_card.md-closed.md-locked-open-add-active {
+ min-width: 200px !important;
+ width: 100% !important;
+ max-width: 100% !important;
+}
+
+.main_container{
+    position: relative;
+    
+    background-image: -webkit-linear-gradient(top, rgba(122, 185, 230, 0.15) 0%, #f1f1f1 100%);
+    background-image: -o-linear-gradient(top, rgba(122, 185, 230, 0.15) 0%, #f1f1f1 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(122, 185, 230, 0.15)), to(#f1f1f1));
+    background-image: linear-gradient(to bottom, rgba(122, 185, 230, 0.15) 0%, #f1f1f1 100%);
+    
+/*    background-image: -webkit-linear-gradient(top, #cacaca 0%, #f1f1f1 100%);
+    background-image: -o-linear-gradient(top, #cacaca 0%, #f1f1f1 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#cacaca), to(#f1f1f1));
+    background-image: linear-gradient(to bottom, #cacaca 0%, #f1f1f1 100%);*/
+}
+
+.filter_outer_container md-content{
+    /*background-color: gainsboro;*/
+}
+
+.filter_container{
+    margin-left: 12px;
+    margin-right: 12px;
+    min-width: 320px;
+}
+
+.info_panel{
+    margin: 8px;
+}
+.info_panel_cont{
+    padding: 24px 16px 16px;
+}
+.tools_panel{
+    background-color: aliceblue;
+}
+
+md-backdrop.md-sidenav-backdrop{
+    display:none;
+    /*not closing when click outhere*/
+}
+
+.phone_keyboard .md-button{
+    min-width: 80px;
+}
+
+.focus_on{
+    text-shadow: 0 0 20px #00c4ff;
+    /*for save button when changes detected*/
+}
+
+.my_toast{
+    background-color: #ffb700;
+}
+
+.client_in_task_title md-card-title-text{
+    width: 100%;
+}
+
+.client_in_task_title span{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.repeated_cdr_item{
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+    height: 40px;
+}
+
+.cdr_chain{
+    background-color: rgba(98, 169, 230, 0.34);
+}
+
+.my_3_line md-checkbox{
+    margin-right: 0px !important;
+}
+
+.one_line_text{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.cdr_det_table td{
+    border-bottom-width: 1px;
+    border-bottom-color: #989898;
+    border-bottom-style: solid;
+    padding-top: 5px;
+    padding-right: 15px;
+}
+
+.task_color_stroke{
+    text-shadow:
+   -1px -1px 0 #989898,  
+    1px -1px 0 #989898,
+    -1px 1px 0 #989898,
+     1px 1px 0 #989898;
+}
+
+.phone_red_btn md-icon{
+    color: #fe0606 !important;
+}
+
+.phone_green_btn md-icon{
+    color: #45ae3f !important;
+}
+
+.my_chart_500{
+    width: 1000px;
+    height: 500px;
+    margin-bottom: 50px;
+}
+
+.my_play_cont button, .my_play_cont a{
+    margin: 0px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+/*.phone_green_btn md-icon, .phone_red_btn md-icon{
+    color: #dbeffa;
+}*/

@@ -1,0 +1,66 @@
+<md-content layout="column" flex>
+    <div layout-fill layout="column">
+        <div class="filter_container">
+<!--            <div layout="row">
+                <md-button flex>Сьогодні</md-button>
+                <md-button flex>Тиждень</md-button>
+                <md-button flex>Місяць</md-button>
+            </div>-->
+
+            <md-input-container class="md-block" flex>
+                <label>Фільтр</label>
+                <input ng-model="state.filter.filter"
+                       ng-change ="changeFilter()">
+            </md-input-container>
+            <md-input-container class="md-block" flex>
+                <label>Типи</label>
+                <md-select ng-model="state.filter.type"
+                           ng-change ="changeFilter()"
+                           multiple>
+                    <md-option ng-repeat="type in directory.taskTypes" ng-value="type">
+                        <md-icon class="material-icons">{{type.icon}}</md-icon>
+                        <span>{{type.name}}</span>
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <br/>
+            <md-input-container class="md-block" flex>
+                <label>Статуси</label>
+                <md-select ng-model="state.filter.state"
+                           ng-change="changeFilter()"
+                           multiple>
+                    <md-option ng-repeat="tstate in directory.taskStates" ng-value="tstate">
+                        <md-icon class="material-icons">{{tstate.icon}}</md-icon>
+                        <span>{{tstate.name}}</span>
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            
+            <br/>
+            <md-input-container class="md-block"
+                                flex>
+                <label>Менеджери</label>
+                <md-select ng-model="state.filter.manager"
+                           ng-change="changeFilter()"
+                           multiple>
+                    <md-option ng-repeat="manager in directory.managers" ng-value="manager">
+                        {{manager.name}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <br/>
+            <md-radio-group ng-model="state.taskPeriod"
+                            layout="column">
+                <div layout="row">
+                    <md-radio-button value="day" flex>Сьогодні</md-radio-button>
+                    <md-radio-button value="mounth" flex>Місяць</md-radio-button>
+                </div>
+                <div layout="row">
+                    <md-radio-button value="week" flex>Тиждень</md-radio-button>
+                    <md-radio-button value="all" flex>Всі</md-radio-button>
+                </div>
+            </md-radio-group>
+        </div>
+        
+    </div>
+</md-content>

@@ -1,0 +1,37 @@
+<md-dialog aria-label="Calling" ng-cloak>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Деталі</h2>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="md-padding">
+        <md-content flex>
+            <table class="cdr_det_table">
+                <tbody>
+                    <tr><td>calldate</td><td ng-bind="call.calldate | date:'dd.MM.yyyy HH:mm:ss'"></td></tr>
+                    <tr><td>clid</td><td ng-bind="call.clid"></td></tr>
+                    <tr><td>src</td><td ng-bind="call.src"></td></tr>
+                    <tr><td>dst</td><td ng-bind="call.dst"></td></tr>
+                    <tr><td>dcontext</td><td ng-bind="call.dcontext"></td></tr>
+                    <tr><td>channel</td><td ng-bind="call.channel"></td></tr>
+                    <tr><td>dstchannel</td><td ng-bind="call.dstchannel"></td></tr>
+                    <tr><td>lastapp</td><td ng-bind="call.lastapp"></td></tr>
+                    <tr><td>lastdata</td><td ng-bind="call.lastdata"></td></tr>
+                    <tr><td>duration</td><td ng-bind="formatSeconds(call.duration)"></td></tr>
+                    <tr><td>billsec</td><td ng-bind="formatSeconds(call.billsec)"></td></tr>
+                    <tr><td>disposition</td><td ng-bind="call.disposition"></td></tr>
+                    <tr><td>amaflags</td><td ng-bind="call.amaflags"></td></tr>
+                    <tr><td>accountcode</td><td ng-bind="call.accountcode"></td></tr>
+                    <tr><td>uniqueid</td><td ng-bind="call.uniqueid"></td></tr>
+                    <tr><td>userfield</td><td ng-bind="call.userfield"></td></tr>
+                    <tr><td>id</td><td ng-bind="call.id"></td></tr>
+                    <tr><td>filename</td><td ng-bind="call.filename"></td></tr>
+                </tbody>
+            </table>
+        </md-content>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button ng-click="cancel()">Закрити</md-button>
+    </md-dialog-actions>
+</md-dialog>

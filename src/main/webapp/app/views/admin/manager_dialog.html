@@ -1,0 +1,60 @@
+<md-dialog aria-label="Manager">
+    <form ng-cloak
+          ng-submit="saveManager()"
+          name="managerForm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Менеджер</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon class="material-icons" aria-label="Close dialog">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <div layout="column">
+                    <div layout="row">
+                        <md-input-container>
+                            <label>Ім'я</label>
+                            <input required name="name" ng-model="entity.name">
+                            <div ng-messages="managerForm.name.$error">
+                                <div ng-message="required">This is required.</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Логін</label>
+                            <input required name="login" ng-model="entity.login">
+<!--                            <div ng-messages="managerForm.login.$error">
+                                <div ng-message="required">This is required.</div>
+                            </div>-->
+                        </md-input-container>
+                    </div>
+                    <div layout="row">
+                        <md-input-container flex>
+                            <label>Номер</label>
+                            <input name="number" ng-model="entity.extNum">
+                        </md-input-container>
+                        <div flex></div>
+                    </div>
+                    <md-button ng-if="!changePass"
+                               ng-click="changePassw()">Поміняти пароль!</md-button>
+                    <md-input-container ng-if="changePass">
+                        <label>Пароль</label>
+                        <input required name="pass" ng-model="entity.newPass">
+<!--                        <div ng-messages="managerForm.pass.$error">
+                            <div ng-message="required">Обов.</div>
+                        </div>-->
+                    </md-input-container>
+                </div>
+
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button type="submit">
+                Зберегти
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

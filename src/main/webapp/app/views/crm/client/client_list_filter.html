@@ -1,0 +1,55 @@
+<!--<md-toolbar class="md-theme-light"
+            ng-click="closeFilter()">
+    <div class="md-toolbar-tools">
+        <h1 class="md-toolbar-tools">Заховати панель фільтрів</h1>
+    </div>
+</md-toolbar>-->
+<md-content layout="column" flex>
+    <div layout-fill layout="column">
+        <div class="filter_container">
+            <md-input-container class="md-block" flex>
+                <label>Фільтр</label>
+                <input ng-model="state.filter.filter"
+                       ng-change ="changeFilter()">
+            </md-input-container>
+           <md-input-container class="md-block" flex>
+                <label>Типи</label>
+                <md-select ng-model="state.filter.type"
+                           ng-change ="changeFilter()"
+                           multiple>
+                    <md-option ng-repeat="clientType in directory.types" ng-value="clientType">
+                        <md-icon class="material-icons">{{clientType.icon}}</md-icon>
+                        <span>{{clientType.name}}</span>
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <br/>
+            <md-input-container class="md-block" flex>
+                <label>Статуси</label>
+                <md-select ng-model="state.filter.state"
+                           ng-change="changeFilter()"
+                           multiple>
+                    <md-option ng-repeat="clientState in directory.states" ng-value="clientState">
+                        <md-icon class="material-icons">{{clientState.icon}}</md-icon>
+                        <span>{{clientState.name}}</span>
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            
+            <br/>
+            <md-input-container class="md-block"
+                                flex>
+                <label>Менеджери</label>
+                <md-select ng-model="state.filter.manager"
+                           ng-change="changeFilter()"
+                           multiple>
+                    <md-option ng-repeat="manager in directory.managers" ng-value="manager">
+                        {{manager.name}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <!--<pre>{{user|json}}</pre>-->
+        </div>
+        
+    </div>
+</md-content>

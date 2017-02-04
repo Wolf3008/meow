@@ -1,0 +1,48 @@
+<md-dialog aria-label="Entity">
+    <form ng-cloak
+          ng-submit="saveEntity()"
+          name="managerForm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Редагування</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon class="material-icons" aria-label="Close dialog">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <div layout="column">
+                    <div layout="row">
+                        <md-input-container>
+                            <label>Ім'я</label>
+                            <input required name="name" ng-model="entity.name">
+                            <div ng-messages="managerForm.name.$error">
+                                <div ng-message="required">This is required.</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Ціна</label>
+                            <input name="cost"
+                                   type="number"
+                                   ng-model="entity.cost">
+                            <div ng-messages="managerForm.name.$error">
+                                <div ng-message="required">This is required.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    
+                    <md-input-container>
+                        <label>Опис</label>
+                        <input name="description" ng-model="entity.description">
+                    </md-input-container>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button type="submit">Зберегти</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

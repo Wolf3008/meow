@@ -1,0 +1,180 @@
+{
+    "elements": {
+        "md-tab-content": {},
+        "md-divider": {},
+        "md-tab-label": {},
+        "uib-accordion-heading": {},
+        "md-tab": {
+            "attributes": {
+                "ng-repeat": {},
+                "label": {},
+                "id": {},
+                "ng-disabled": {}
+            }
+        },
+        "md-list-item": {
+            "attributes": {
+                "md-virtual-repeat": {},
+                "ng-click": {},
+                "ng-repeat": {},
+                "class": {},
+                "md-on-demand": {}
+            }
+        },
+        "md-menu-divider": {},
+        "md-checkbox": {},
+        "md-list": {
+            "attributes": {
+                "ng-controller": {},
+                "class": {},
+                "ng-cloak": {}
+            }
+        },
+        "md-menu": {},
+        "md-card-header": {},
+        "md-content": {
+            "attributes": {
+                "class": {},
+                "layout-align": {},
+                "md-theme": {}
+            }
+        },
+        "md-dialog-content": {},
+        "md-card": {},
+        "md-dialog": {
+            "attributes": {
+                "class": {},
+                "aria-label": {}
+            }
+        },
+        "md-card-title-text": {},
+        "uib-accordion": {
+            "attributes": {
+                "close-others": {}
+            }
+        },
+        "md-menu-content": {
+            "attributes": {
+                "width": {}
+            }
+        },
+        "md-menu-item": {},
+        "md-card-title": {},
+        "md-button": {
+            "attributes": {
+                "ng-click": {},
+                "style": {},
+                "href": {},
+                "type": {},
+                "ng-if": {},
+                "class": {},
+                "aria-label": {}
+            }
+        },
+        "md-card-content": {},
+        "md-toolbar": {
+            "attributes": {
+                "ng-init": {},
+                "class": {},
+                "layout-align": {},
+                "md-theme": {}
+            }
+        },
+        "md-tabs": {
+            "attributes": {
+                "md-dynamic-height": {},
+                "md-border-bottom": {},
+                "class": {}
+            }
+        },
+        "md-sidenav": {
+            "attributes": {
+                "md-component-id": {},
+                "md-is-locked-open": {},
+                "class": {}
+            }
+        },
+        "md-grid-tile": {
+            "attributes": {
+                "ng-click": {},
+                "ng-repeat": {},
+                "style": {}
+            }
+        },
+        "md-tooltip": {
+            "attributes": {
+                "md-direction": {}
+            }
+        },
+        "md-tab-body": {},
+        "uib-accordion-group": {
+            "attributes": {
+                "is-open": {}
+            }
+        },
+        "md-subheader": {
+            "attributes": {
+                "class": {}
+            }
+        },
+        "md-whiteframe": {
+            "attributes": {
+                "style": {},
+                "class": {}
+            }
+        },
+        "md-icon": {
+            "attributes": {
+                "md-svg-icon": {},
+                "ng-click": {},
+                "style": {},
+                "ng-if": {},
+                "class": {},
+                "aria-label": {}
+            }
+        },
+        "md-input-container": {
+            "attributes": {
+                "style": {},
+                "ng-if": {},
+                "class": {}
+            }
+        },
+        "md-grid-list": {
+            "attributes": {
+                "md-cols-sm": {},
+                "md-cols-md": {},
+                "md-cols-gt-md": {},
+                "md-gutter": {},
+                "md-row-height": {}
+            }
+        }
+    },
+    "attributes": {
+        "layout": {
+            "context": "div"
+        },
+        "layout-gt-sm": {
+            "context": "div"
+        },
+        "ng-model": {},
+        "flex": {
+            "context": "div"
+        },
+        "ng-click": {},
+        "ng-class": {},
+        "ui-view": {
+            "context": "div"
+        },
+        "layout-fill": {
+            "context": "div"
+        },
+        "ac-chart": {
+            "context": "div"
+        },
+        "ng-if": {},
+        "ui-sref": {
+            "context": "a"
+        }
+    }
+}

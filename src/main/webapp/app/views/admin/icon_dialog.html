@@ -1,0 +1,44 @@
+<md-dialog aria-label="Icons" flex>
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Іконки</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+            <md-icon class="material-icons" aria-label="Close dialog">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <div flex
+                 ng-repeat="group in grid.groups"
+                 layout="column">
+                <md-divider></md-divider>
+                <!--<md-subheader ng-click="group.data.show=!group.data.show">{{group.data.name}}</md-subheader>-->
+                <md-button ng-click="group.data.show=!group.data.show" flex>{{group.data.name}}</md-button>
+                <md-grid-list ng-if="group.data.show"
+                              md-cols-gt-md="8" 
+                              md-cols-md="6" 
+                              md-cols-sm="6" md-gutter="24px" md-row-height="1:1">
+                    <md-grid-tile ng-repeat="icon in grid.icons | filter:{group_id:group.data.id}"
+                                  ng-click="saveEntity(icon.ligature)"
+                                  style="background-color: #ececec;cursor: pointer;">
+                        <md-icon class="material-icons md-48"
+                                 style="height: initial;width: initial;">{{icon.ligature}}</md-icon>
+                        <md-grid-tile-footer>
+                            <h3>{{icon.name}}</h3>
+                        </md-grid-tile-footer>
+                    </md-grid-tile>
+                </md-grid-list>
+                <br/>
+            </div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <md-button ng-click="cancel()">
+        Відмінити
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

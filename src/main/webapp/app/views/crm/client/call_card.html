@@ -1,0 +1,30 @@
+<md-dialog aria-label="Calling">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Контакти ({{originContacts.length}})</h2>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <md-content flex>
+            <md-list>
+                <md-divider></md-divider>
+                <md-subheader class="md-no-sticky">Контакти, на які можна дзвонити:</md-subheader>
+                <md-list-item class="md-2-line" 
+                              ng-repeat="contact in contacts" 
+                              ng-click="callTo(contact.contact)"
+                              layout="row">
+                    <md-icon class="material-icons md-avatar-icon">{{contact.type.icon}}</md-icon>
+                    <div class="md-list-item-text">
+                        <h3>{{ contact.contact}}</h3>
+                        <p>{{ contact.comment }}</p>
+                    </div>
+                    <div flex></div>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button ng-click="cancel()">Відмінити</md-button>
+    </md-dialog-actions>
+</md-dialog>

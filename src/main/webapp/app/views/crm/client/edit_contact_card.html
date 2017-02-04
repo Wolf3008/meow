@@ -1,0 +1,43 @@
+<md-dialog aria-label="Контакт" style="width: 30%;">
+    <form ng-submit="answer(contact)">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Контакт</h2>
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="padding: 20px;">
+        <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Тип</label>
+                <md-select ng-model="contact.type" ng-model-options="{trackBy: '$value.id'}"
+                           required>
+                    <md-option ng-repeat="t in directory.contactTypes" ng-value="t">
+                        <md-icon class="material-icons">{{t.icon}}</md-icon>
+                        <span>{{t.name}}</span>
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Контакт</label>
+                <input ng-model="contact.contact"
+                       required>
+            </md-input-container>
+        </div>
+        <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex>
+                <label>Коментар</label>
+                <textarea ng-model="contact.comment" md-maxlength="1024" rows="2" md-select-on-focus></textarea>
+            </md-input-container>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="cancel()" >
+        Відмінити
+      </md-button>
+      <md-button type="submit" style="margin-right:20px;" >
+          {{confirmText}}
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

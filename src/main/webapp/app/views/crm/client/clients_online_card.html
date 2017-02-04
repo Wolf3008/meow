@@ -1,0 +1,31 @@
+<md-dialog aria-label="Online">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Клієнти ({{clientsOnLine.length||0}})</h2>
+        </div>
+    </md-toolbar>
+    <md-dialog-content ng-init="initClOnLineCard()">
+        <md-content flex>
+            <md-list>
+                <md-divider></md-divider>
+                <md-subheader class="md-no-sticky">Клієнти з даним номером:</md-subheader>
+                <md-list-item class="md-2-line" 
+                              ng-repeat="client in clientsOnLine" 
+                              ng-click="openClient(client.id)"
+                              layout="row">
+                    <md-icon class="material-icons md-avatar-icon">person</md-icon>
+                    <div class="md-list-item-text">
+                        <h3>{{ client.id}}</h3>
+                        <h4>{{ client.name}}</h4>
+                        <p>{{ client.comment }}</p>
+                    </div>
+                    <div flex></div>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button ng-click="cancel()">Закрити</md-button>
+    </md-dialog-actions>
+</md-dialog>

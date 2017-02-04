@@ -1,0 +1,242 @@
+<md-dialog aria-label="Deal" 
+           style="width: 50%;height: 80%;"
+           layout="column"
+           ng-init="initDealCard()">
+    <div layout-fill layout="column" flex>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Угода <span ng-if="deal.id">№{{deal.id}}</span></h2>
+                <md-button class="md-icon-button"
+                           ng-if="deal.id"
+                           ng-click="delDeal(deal.id)">
+                    <md-icon class="material-icons">delete</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content layout="column" flex>
+            <!--<div flex layout="row">-->
+                <md-tabs md-border-bottom
+                         class="stretch-height"
+                         md-stretch-tabs="auto"
+                         flex>
+                    <md-tab label="Угода">
+                        <form layout-fill
+                              ng-submit="saveEntity()"
+                              name="dealForm"
+                              id="dealFormId">
+                        <div style="padding: 20px;">
+                            <div layout="column" flex>
+                                <div layout-gt-sm="row">
+                                    <md-input-container class="md-block" 
+                                                        flex
+                                                        style="margin-bottom: 0px;">
+                                        <label>Назва</label>
+                                        <input ng-model="deal.name"/>
+                                    </md-input-container>
+                                </div>
+                                <div layout="row" flex>
+                                    <md-input-container class="md-block" flex>
+                                        <label>Менеджер</label>
+                                        <md-select ng-model="deal.manager" 
+                                                   ng-model-options="{trackBy: '$value.id'}"
+                                                   required>
+                                            <md-option ng-repeat="dealManager in directory.managers track by dealManager.id" ng-value="dealManager">
+                                                <span>{{dealManager.name}}</span>
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex>
+                                        <label>Тип</label>
+                                        <md-select ng-model="deal.type" 
+                                                   ng-model-options="{trackBy: '$value.id'}"
+                                                   required
+                                                   name="type">
+                                            <md-option ng-repeat="type in directory.dealTypes track by type.id" ng-value="type">
+                                                <md-icon class="material-icons">{{type.icon}}</md-icon>
+                                                <span>{{type.name}}</span>
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex>
+                                        <label>Статус</label>
+                                        <md-select ng-model="deal.state" ng-model-options="{trackBy: '$value.id'}">
+                                            <md-option ng-repeat="state in directory.dealStates track by state.id" ng-value="state">
+                                                <md-icon class="material-icons">{{state.icon}}</md-icon>
+                                                <span>{{state.name}}</span>
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                                <div layout="row"
+                                     layout-align="start center"
+                                     flex>
+                                    <mdp-date-picker mdp-placeholder="Дата"
+                                                     mdp-format="DD/MM/YYYY"
+                                                     ng-model="deal.ddate"
+                                                     name="date"
+                                                     flex></mdp-date-picker>
+                                    <md-input-container class="md-block"
+                                                        flex>
+                                        <label>Ціна</label>
+                                        <input ng-model="deal.cost"
+                                               ng-disabled="costDisabled"
+                                               type="number"/>
+                                        <md-icon class="material-icons"
+                                                 ng-click="costDisabled=!costDisabled">{{costDisabled?'lock':'lock_open'}}</md-icon>
+                                    </md-input-container>
+                                    <div layout="row" flex>
+                                        <md-button ng-click="openClient(deal.client.id)"
+                                                   class="md-raised_"
+                                                   flex>{{deal.client.name}}</md-button>
+                                    </div>
+                                </div>
+                                <div layout-gt-sm="row">
+                                    <md-input-container class="md-block" 
+                                                        flex
+                                                        style="margin-bottom: 0px;">
+                                        <label>Текст</label>
+                                        <textarea ng-model="deal.comment" 
+                                                  md-select-on-focus
+                                                  style="max-height: 100px;"></textarea>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        </form>
+                    </md-tab>
+                    <md-tab label="Сутності"
+                            ng-disabled="!deal.type">
+                        <div layout-fill
+                             layout="column"
+                             class="md-padding"
+                             style="//padding: 10px;">
+                            <form layout="column"
+                                  name="thingForm"
+                                  class="md-whiteframe-4dp"
+                                  style="padding: 10px; margin-bottom: 5px;"
+                                  ng-submit="addThing()">
+                                <div layout="row">
+                                    <md-input-container class="md-block" flex>
+                                        <label>Тип</label>
+                                        <md-select ng-model="currThing.type" 
+                                                   ng-model-options="{trackBy: '$value.id'}"
+                                                   required
+                                                   name="type">
+                                            <md-option ng-repeat="type in deal.type.thingTypes track by type.id" ng-value="type">
+                                                <md-icon class="material-icons">{{type.icon}}</md-icon>
+                                                <span>{{type.name}}</span>
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex>
+                                        <label>Кількість</label>
+                                        <input ng-model="currThing.count"
+                                               type="number"/>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex>
+                                        <label>Ціна</label>
+                                        <input ng-model="currThing.cost"
+                                               type="number"/>
+                                    </md-input-container>
+                                </div>
+                                <md-input-container class="md-block"
+                                                    style="margin-bottom: 0px;">
+                                    <label>Примітка</label>
+                                    <textarea ng-model="currThing.text" 
+                                              md-maxlength="512" 
+                                              rows="1" 
+                                              md-select-on-focus
+                                              style="max-height: 80px;overflow-y: auto;"></textarea>
+                                </md-input-container>
+                                <div layout="row">
+                                    <md-button type="submit">{{currThing.exist?'Застосувати':'Додати'}}</md-button>
+                                    <md-button ng-click="calculateThingCost()">Рахувати ціну</md-button>
+                                    <md-button ng-click="resetCurrThing()">Зкинути</md-button>
+                                </div>
+                            </form>
+                            <md-content flex>
+                                <md-list>
+<!--                                    <md-list-item class="md-3-line" 
+                                                  ng-repeat="thing in deal.things" 
+                                                  ng-click="editThing(thing)">
+                                        <md-icon class="material-icons md-avatar-icon">{{thing.type.icon}}</md-icon>
+                                        <div class="md-list-item-text">
+                                            <h3>{{ thing.type.name}}</h3>
+                                            <h4>Кількість: {{ thing.count}}</h4>
+                                            <p>{{ thing.text }}</p>
+                                        </div>
+                                        <span class="md-secondary"
+                                              style="margin-right: 15px;">{{thing.cost}}</span>
+                                        <md-checkbox class="md-secondary" ng-model="thing.complite"></md-checkbox>
+                                        <md-button class="md-secondary md-icon-button" 
+                                                   ng-click="delThing($index)">
+                                            <md-icon class="material-icons">delete</md-icon>
+                                        </md-button>
+                                    </md-list-item>-->
+                                    <md-list-item class="md-3-line my_3_line" 
+                                                  ng-repeat="thing in deal.things" 
+                                                  ng-click="editThing(thing)"
+                                                  layout="row">
+                                        <md-icon class="material-icons md-avatar-icon">{{thing.type.icon}}</md-icon>
+                                        <div class="md-list-item-text">
+                                            <h3>{{ thing.type.name}}</h3>
+                                            <h4>Кількість: {{ thing.count}}</h4>
+                                            <p>{{ thing.text }}</p>
+                                        </div>
+                                        <div flex></div>
+                                        <span class=""
+                                              style="margin-right: 15px;">{{thing.cost}}</span>
+                                        <md-checkbox class="" ng-model="thing.complite"></md-checkbox>
+                                        <md-button class="md-icon-button" 
+                                                   ng-click="delThing($index)">
+                                            <md-icon class="material-icons">delete</md-icon>
+                                        </md-button>
+                                    </md-list-item>
+                                </md-list>
+                            </md-content>
+                        </div>
+                    </md-tab>
+                    <md-tab label="Задачі" ng-disabled="!deal.id">
+                        <div layout-fill
+                             layout="column">
+                            <div>
+                                <md-button ng-click="taskService.showAddNewTaskDialog({deals:[deal]}, closeCallBack)">Нова задача</md-button>
+                            </div>
+                            <md-content flex>
+                                <md-list flex>
+                                    <md-list-item class="md-3-line" 
+                                                  ng-repeat="task in deal.tasks" 
+                                                  ng-click="taskService.showAddNewTaskDialog(task, closeCallBack)">
+                                        <md-icon class="material-icons md-avatar-icon">attach_money</md-icon>
+                                        <div class="md-list-item-text" layout="column">
+                                            <h3>№{{task.id}} {{ task.type.name}}</h3>
+                                            <h4>{{task.date | date:"dd.MM.yyyy HH:mm"}}</h4>
+                                            <p>{{task.text}}</p>
+                                        </div>
+                                        <span class="md-secondary"
+                                              style="margin-right: 15px;">{{task.state.name}}</span>
+<!--                                        <md-button class="md-secondary md-icon-button" 
+                                                   ng-click="removeTask($index)">
+                                            <md-icon class="material-icons">clear</md-icon>
+                                        </md-button>-->
+                                    </md-list-item>
+                                </md-list>
+                            </md-content>
+                        </div>
+                    </md-tab>
+                    <md-tab label=" " ng-disabled="true"></md-tab>
+                </md-tabs>
+            <!--</div>-->
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="cancel()" >
+                Відмінити
+            </md-button>
+            <md-button type="submit"
+                       form="dealFormId"
+                       style="margin-right:20px;" >Зберегти</md-button>
+        </md-dialog-actions>
+    </div>
+</md-dialog>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<div layout="row">
+    <div>
+        <md-menu>
+            <md-button class="md-fab md-mini"
+                       ng-click="main.openMenu($mdOpenMenu, $event)"
+                       style="margin-right: 0px;">
+                <md-icon class="material-icons">menu</md-icon>
+            </md-button>
+            <md-menu-content width="4">
+                <md-menu-item>
+                    <md-button ng-click="openClient(-1)">
+                        <md-icon class="material-icons">person_add</md-icon> Новий
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="taskService.showAddNewTaskDialog({clients:state.selectedClients})">
+                        <md-icon class="material-icons">alarm_add</md-icon> Задача
+                    </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="reloadList()">
+                        <md-icon class="material-icons">cached</md-icon> обновити
+                    </md-button>
+                </md-menu-item>
+                <md-menu-divider></md-menu-divider>
+                <md-menu-item>
+                    <md-button ng-click="state.enableFilter=!state.enableFilter">
+                        <md-icon class="material-icons">search</md-icon>
+                        {{state.enableFilter ? 'Заховати' : 'Показати' }} панель фільтрів
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+    <div flex>
+        <md-chips ng-model="filterChips" 
+                  readonly="true"
+                  md-removable ="true"
+                  md-on-remove = "deleteChips($chip, $index)">
+            <md-chip-template>
+                <span>
+                    {{$chip.name}}
+                </span>
+            </md-chip-template>
+        </md-chips>
+    </div>
+</div>
+<div layout="row" flex class="main_container"
+     ng-init="init()">
+    <div ui-view="filter"
+         layout="column"
+         class="filter_outer_container"
+         ng-show="state.enableFilter">
+    </div>
+    <div layout="column" layout-align="top" flex>
+        <md-virtual-repeat-container id="vertical-container" flex>
+            <md-list flex>
+                <div md-virtual-repeat="item in dynamicItems"
+                     md-on-demand >
+                    <md-list-item class="md-3-line"
+                                  layout="row"
+                                  flex
+                                  ng-click="openClient(item.id)">
+                        <md-icon class="material-icons md-avatar-icon">person</md-icon>
+                        <div layout="row"
+                             flex
+                             style="min-width: 0;">
+                            <div flex="70">
+                                <div class="md-list-item-text">
+                                    <h3>№{{item.id}}</h3>
+                                    <h4>{{item.name}}</h4>
+                                    <p class="one_line_text">{{item.comment}}</p>
+                                </div>
+                            </div>
+                            <div class="md-list-item-text" 
+                                 layout="column"
+                                 flex>
+                                <h4>Тип: {{item.type.name}}</h4>
+                                <h4>Статус: {{item.state.name}}</h4>
+                            </div>
+                        </div>
+                        <md-button class="md-icon-button"
+                                   ng-click="showCallingDialog(item.contacts)"
+                                   aria-label="Call">
+                            <md-icon class="md-icons">call</md-icon>
+                        </md-button>
+                        <md-checkbox ng-model="item.selected"
+                                     ng-change="selectClient(item)"></md-checkbox>
+                    </md-list-item>
+                    <md-divider></md-divider>
+                </div>
+            </md-list>
+<!--                <div md-virtual-repeat="item in dynamicItems"
+                     md-on-demand
+                     flex>
+                    <md-card layout="row"
+                             ng-dblclick="openClient(item.id)"
+                             layout-align="center center">
+                        <div layout="column"
+                             layout-align="center center"
+                             style="margin-left: 20px;margin-right: 20px;">
+                            <div>
+                                <md-icon class="md-avatar-icon">person</md-icon>
+                            </div>
+                            <div>
+                                <span>{{item.id}}</span>
+                            </div>
+                        </div>
+                        <div flex="50">
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline" ng-click="openClient(item.id)">{{item.name}}</span>
+                                    <span class="md-subhead description">{{item.comment}}</span>
+                                </md-card-title-text>
+                            </md-card-title>
+                        </div>
+                        <div layout="row"
+                             flex
+                             layout-align="center center">
+                            <div layout="column"
+                                 layout-align="center start"
+                                 style="margin-left: 20px;margin-right: 20px;">
+                                <div>
+                                    <span>Тип: {{item.type.name}}</span>
+                                </div>
+                                <div>
+                                    <span>Статус: {{item.state.name}}</span>
+                                </div>
+                            </div>
+                            <span flex></span>
+                            <md-card-actions layout="row"  layout-align="center center">
+                                <md-button class="md-icon-button" aria-label="Settings">
+                                    <md-icon class=" md-avatar">call</md-icon>
+                                </md-button>
+                                <div>
+                                    <md-checkbox ng-model="item.selected"
+                                                 ng-change="selectClient(item)"
+                                                 style="margin-bottom: 0px;"></md-checkbox>
+                                </div>
+                            </md-card-actions>
+                        </div>
+                    </md-card>
+                </div>-->
+        </md-virtual-repeat-container>
+    </div>
+</div>
+<md-sidenav class="md-sidenav-right md-whiteframe-4dp client_card" 
+            md-component-id="right">
+    <div ui-view="body"
+         layout="column"
+         flex
+         layout-fill>
+        
+    </div>
+</md-sidenav>

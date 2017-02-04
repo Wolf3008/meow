@@ -1,0 +1,16 @@
+<md-dialog aria-label="Relogin"
+           class="md-padding">
+    <form ng-submit="ok()">
+        <md-input-container class="md-block">
+            <label>Логін</label>
+            <input type="text" required name="login" ng-model="login"/>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Пароль</label>
+            <input type="password" required name="password" ng-model="pass"/>
+        </md-input-container>
+        <div flex layout="row" layout-alighn="center center">
+            <md-button type="submit">Увійти</md-button>
+        </div>
+    </form>
+</md-dialog>

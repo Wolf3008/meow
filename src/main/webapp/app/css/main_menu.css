@@ -1,0 +1,114 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 26, 2016, 1:22:37 PM
+    Author     : smil
+*/
+.main_panel{
+    width: 5%;
+    height: 90vh;
+    position: fixed;
+    z-index: 1005;
+    
+    margin-top: 10vh;
+    
+    background-image: -webkit-linear-gradient(top, #3c3c3c 0%, #222 100%);
+    background-image: -o-linear-gradient(top, #3c3c3c 0%, #222 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#3c3c3c), to(#222));
+    background-image: linear-gradient(to bottom, #3c3c3c 0%, #222 100%);
+}
+
+.main_panel .container-fluid{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.main_content{
+    /*//  position: fixed;*/
+    padding-left: 5%;
+    margin-top: 10vh;
+}
+
+.main_header{
+    height: 10vh;
+    width: 100%;
+    position: fixed;
+    z-index: 1005;
+    
+    color: #989898;
+    line-height:10vh;
+    /*//display: table;*/
+    
+    background-image: -webkit-linear-gradient(top, #3c3c3c 0%, #222 100%);
+    background-image: -o-linear-gradient(top, #3c3c3c 0%, #222 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#3c3c3c), to(#222));
+    background-image: linear-gradient(to bottom, #3c3c3c 0%, #222 100%);
+}
+/*.main_header>*{
+    display: table-cell;
+    vertical-align: middle;
+    height: 10vh;
+}*/
+.main_call_block input, .main_call_block button{
+    height: 5vh;
+    font-size: 3vh;
+        
+    /*line-height:5vh;*/
+}
+.main_call_block{
+    line-height: normal;
+    margin-top: 2.5vh;
+}
+
+.my_sq{
+    height:5vw;
+    /*//background-color: #777;*/
+    /*//border: solid #d5d7ff;*/
+    border-bottom: solid #555555;
+    border-width: 1px;
+    cursor: pointer;
+    color: yellowgreen;
+    text-align: center;
+    line-height:5vw;
+    
+    font-size: 2vh;
+    
+    transition: all 0.5s;
+/*    animation-name: example;
+    animation-duration: 0.5s;
+    animation-direction: reverse;*/
+}
+
+@keyframes example {
+    from {
+        font-size: 2vh;
+        //background-color: #222;
+        color: yellowgreen;
+    }
+    to {
+        font-size: 4vh;
+        background-color: #555555;
+        color: #fed2f8;
+    }
+}
+.my_sq:hover{
+    background-color: #555555;
+    font-size: 4vh;
+    color: #fed2f8;
+    /*//border-width: 2px;*/
+    animation-name: example;
+    animation-duration: 0.25s;
+}
+.meow_title{
+    font-size: 5vh;
+}
+.meow_icon{
+    height: 7vh;
+}
+
+/*.my_sq:hover::after{
+    
+}*/

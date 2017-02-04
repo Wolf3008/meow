@@ -1,0 +1,49 @@
+<md-card layout="row"
+         ng-dblclick="openClient(item.id)"
+         layout-align="center center">
+    <div layout="column"
+         layout-align="center center"
+         style="margin-left: 20px;
+         margin-right: 20px;">
+        <div>
+            <md-icon class="md-avatar-icon">person</md-icon>
+        </div>
+        <div>
+            <span>{{item.id}}</span>
+        </div>
+    </div>
+    <div flex="50">
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline" ng-click="openClient(item.id)">{{item.name}}</span>
+                <span class="md-subhead description">{{item.comment}}</span>
+            </md-card-title-text>
+        </md-card-title>
+    </div>
+    <div layout="row"
+         flex
+         layout-align="center center">
+        <div layout="column"
+             layout-align="center start"
+             style="margin-left: 20px;
+             margin-right: 20px;">
+            <div>
+                <span>Тип: {{item.type.name}}</span>
+            </div>
+            <div>
+                <span>Статус: {{item.state.name}}</span>
+            </div>
+        </div>
+        <span flex></span>
+        <md-card-actions layout="row"  layout-align="center center">
+            <md-button class="md-icon-button" aria-label="Settings">
+                <md-icon class=" md-avatar">call</md-icon>
+            </md-button>
+            <div>
+                <md-checkbox ng-model="item.selected"
+                             ng-change="selectClient(item)"
+                             style="margin-bottom: 0px;"></md-checkbox>
+            </div>
+        </md-card-actions>
+    </div>
+</md-card>

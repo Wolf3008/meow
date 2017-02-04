@@ -1,0 +1,256 @@
+<md-dialog aria-label="Task" 
+           style="width: 40%;height: 80%;"
+           layout="column">
+    <form ng-submit="answer()"
+          name="taskForm"
+          layout="column"
+          flex>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Задача <span ng-if="task.id">№{{task.id}}</span></h2>
+                <md-button class="md-icon-button"
+                           ng-if="task.id"
+                           ng-click="delTask(task.id)">
+                    <md-icon class="material-icons">delete</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content layout="column" flex>
+            <md-tabs md-border-bottom
+                     class="stretch-height"
+                     layout="column"
+                     flex>
+                <md-tab label="Задача">
+                    <div layout-fill>
+                        <div style="padding: 20px;">
+                            <div layout="column" flex>
+                                <div layout="row" flex>
+                                    <md-input-container class="md-block" flex>
+                                        <label>Менеджер</label>
+                                        <md-select ng-model="task.responsibleUser" ng-model-options="{trackBy: '$value.id'}">
+                                            <md-option ng-repeat="taskManager in directory.managers track by taskManager.id" ng-value="taskManager">
+                                                <span>{{taskManager.name}}</span>
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex>
+                                        <label>Тип</label>
+                                        <md-select ng-model="task.type" 
+                                                   ng-model-options="{trackBy: '$value.id'}"
+                                                   required
+                                                   name="type">
+                                            <md-option ng-repeat="type in directory.taskTypes track by type.id" ng-value="type">
+                                                <md-icon class="material-icons">{{type.icon}}</md-icon>
+                                                <span>{{type.name}}</span>
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex>
+                                        <label>Статус</label>
+                                        <md-select ng-model="task.state" ng-model-options="{trackBy: '$value.id'}">
+                                            <md-option ng-repeat="state in directory.taskStates track by state.id" ng-value="state">
+                                                <md-icon class="material-icons">{{state.icon}}</md-icon>
+                                                <span>{{state.name}}</span>
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                                <div layout="row" flex>
+                                    <mdp-date-picker mdp-placeholder="Дата"
+                                                     mdp-format="DD/MM/YYYY"
+                                                     ng-model="task.date"
+                                                     required
+                                                     name="date">
+                                        <div ng-messages="taskForm.date.$error">
+                                            <div ng-message="required">Виберіть дату!</div>
+                                        </div>
+                                    </mdp-date-picker>
+                                    <mdp-time-picker mdp-placeholder="Час" 
+                                                     ng-model="task.date"></mdp-time-picker>
+                                </div>
+                            </div>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" 
+                                                    flex
+                                                    style="margin-bottom: 0px;">
+                                    <label>Текст</label>
+                                    <textarea ng-model="task.text" 
+                                              md-select-on-focus
+                                              style="max-height: 100px;"></textarea>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+                </md-tab>
+                <md-tab label="Клієнти">
+                    <div layout-fill
+                         layout="column">
+
+                        <div class="md-padding">
+                            <md-autocomplete
+                                ng-disabled="false"
+                                md-no-cache="addcl.noCache"
+                                md-selected-item="addcl.selectedItem"
+                                md-search-text-change="addcl.searchTextChange(ctrl.searchText)"
+                                md-search-text="addcl.searchText"
+                                md-selected-item-change="addcl.selectedItemChange(item)"
+                                md-items="item in addcl.querySearch(addcl.searchText)"
+                                md-item-text="item.name"
+                                md-min-length="0"
+                                placeholder="Додати клієнта..."
+                                md-menu-class="autocomplete-custom-template">
+                                <md-item-template>
+                                    <div layout="row">
+                                        <div layout="column"
+                                             layout-align="center start"
+                                             style="line-height: normal;margin-right: 20px;">
+                                            <div>
+                                                <md-icon>person</md-icon>
+                                            </div>
+                                            <div>
+                                                <span>{{item.id}}</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span>{{item.name}}</span>
+                                        </div>
+                                    </div>
+                                </md-item-template>
+                            </md-autocomplete>
+                        </div>
+                        <md-content class="md-padding"
+                                    style="margin-top: 5px;"
+                                    flex>
+                            <md-list flex>
+                                <md-list-item class="md-2-line" 
+                                              ng-repeat="cl in task.clients"
+                                              ng-click="openClient(cl.id)">
+                                    <md-icon class="material-icons md-avatar-icon">person</md-icon>
+                                    <div class="md-list-item-text" layout="column">
+                                        <h3>№{{cl.id}} {{ cl.name}}</h3>
+                                        <!--<h4>{{cl.type.name}}, {{cl.state.name}}</h4>-->
+                                        <p>{{cl.comment}}</p>
+                                    </div>
+                                    <span class="md-secondary"
+                                          style="margin-right: 15px;">{{cl.type.name}}</span>
+                                    <md-button class="md-secondary md-icon-button" 
+                                               ng-click="removeClient($index)">
+                                        <md-icon class="material-icons">clear</md-icon>
+                                    </md-button>
+                                </md-list-item>
+<!--                                <md-divider></md-divider>-->
+                            </md-list>
+
+                            <!--                                <md-card class=""
+                                                                     ng-repeat="cl in task.clients"
+                                                                     layout="row"
+                                                                     layout-align="center center">
+                                                                <div layout="column"
+                                                                     layout-align="center center"
+                                                                     style="margin-left: 20px;
+                                                                            margin-right: 20px;">
+                                                                    <div>
+                                                                        <md-icon class="md-avatar-icon">person</md-icon>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span>{{cl.id}}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div flex
+                                                                     class="client_in_task_title">
+                                                                    <md-card-title>
+                                                                        <md-card-title-text>
+                                                                            <span class="md-headline">{{cl.name}}</span>
+                                                                            <span class="md-subhead description">{{cl.comment}}</span>
+                                                                        </md-card-title-text>
+                                                                    </md-card-title>
+                                                                </div>
+                            
+                                                                <div layout="row"
+                                                                     layout-align="center center">
+                                                                    <span flex></span>
+                                                                    <md-card-actions layout="row"  layout-align="center center">
+                                                                        <md-button class="md-icon-button"
+                                                                                   ng-click="removeClient($index)">
+                                                                            <md-icon class=" md-avatar">clear</md-icon>
+                                                                        </md-button>
+                                                                    </md-card-actions>
+                                                                </div>
+                                                            </md-card>-->
+                        </md-content>
+                        
+                    </div>
+                </md-tab>
+                <md-tab label="Угоди">
+                    <div layout-fill
+                         layout="column">
+                        <div class="md-padding">
+                            <md-autocomplete
+                                ng-disabled="false"
+                                md-no-cache="adddeal.noCache"
+                                md-selected-item="adddeal.selectedItem"
+                                md-search-text-change="adddeal.searchTextChange(ctrl.searchText)"
+                                md-search-text="adddeal.searchText"
+                                md-selected-item-change="adddeal.selectedItemChange(item)"
+                                md-items="item in adddeal.querySearch(adddeal.searchText)"
+                                md-item-text="item.name"
+                                md-min-length="0"
+                                placeholder="Додати угоду..."
+                                md-menu-class="autocomplete-custom-template">
+                                <md-item-template>
+                                    <div layout="row">
+                                        <div layout="column"
+                                             layout-align="center start"
+                                             style="line-height: normal;
+                                     margin-right: 20px;">
+                                            <div>
+                                                <md-icon>attach_money</md-icon>
+                                            </div>
+                                            <div>
+                                                <span>{{item.id}}</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span>{{item.name}}</span>
+                                        </div>
+                                    </div>
+                                </md-item-template>
+                            </md-autocomplete>
+                        </div>
+                        <md-content class="md-padding"
+                                    flex>
+                            <md-list flex>
+                                <md-list-item class="md-3-line" 
+                                              ng-repeat="deal in task.deals" 
+                                              ng-click="dealService.showAddDealDialog(deal, reloadClient, true)">
+                                    <md-icon class="material-icons md-avatar-icon">attach_money</md-icon>
+                                    <div class="md-list-item-text" layout="column">
+                                        <h3>№{{deal.id}} {{ deal.type.name}}</h3>
+                                        <h4>{{deal.name}}</h4>
+                                        <p>{{deal.comment}}</p>
+                                    </div>
+                                    <span class="md-secondary"
+                                          style="margin-right: 15px;">{{deal.state.name}}</span>
+                                    <md-button class="md-secondary md-icon-button" 
+                                               ng-click="removeDeal($index)">
+                                        <md-icon class="material-icons">clear</md-icon>
+                                    </md-button>
+                                </md-list-item>
+                                <!--<md-divider></md-divider>-->
+                            </md-list>
+                        </md-content>
+                    </div>
+                </md-tab>
+                <md-tab label=" " ng-disabled="true"></md-tab>
+            </md-tabs>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="cancel()" >
+                Відмінити
+            </md-button>
+            <md-button type="submit"
+                       style="margin-right:20px;" >Зберегти</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

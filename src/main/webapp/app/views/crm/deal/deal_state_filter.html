@@ -1,0 +1,48 @@
+<md-content layout="column" flex>
+    <div layout-fill layout="column">
+        <div class="filter_container">
+            <md-input-container class="md-block" flex>
+                <label>Фільтр</label>
+                <input ng-model="state.filter.filter"
+                       ng-change ="changeFilter()">
+            </md-input-container>
+           <md-input-container class="md-block" flex>
+                <label>Типи</label>
+                <md-select ng-model="state.filter.type"
+                           ng-change ="changeFilter()"
+                           multiple>
+                    <md-option ng-repeat="type in directory.dealTypes" ng-value="type">
+                        <md-icon class="material-icons">{{type.icon}}</md-icon>
+                        <span>{{type.name}}</span>
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            <br/>
+            <md-input-container class="md-block" flex>
+                <label>Статуси</label>
+                <md-select ng-model="state.filter.state"
+                           ng-change="changeFilter()"
+                           multiple>
+                    <md-option ng-repeat="dState in directory.dealStates" ng-value="dState">
+                        <md-icon class="material-icons">{{dState.icon}}</md-icon>
+                        <span>{{dState.name}}</span>
+                    </md-option>
+                </md-select>
+            </md-input-container>
+            
+            <br/>
+            <md-input-container class="md-block"
+                                flex>
+                <label>Менеджери</label>
+                <md-select ng-model="state.filter.manager"
+                           ng-change="changeFilter()"
+                           multiple>
+                    <md-option ng-repeat="manager in directory.managers" ng-value="manager">
+                        {{manager.name}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        
+    </div>
+</md-content>

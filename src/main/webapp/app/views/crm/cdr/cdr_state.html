@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<div layout="row">
+    <div>
+        <md-menu>
+            <md-button class="md-fab md-mini"
+                       ng-click="main.openMenu($mdOpenMenu, $event)"
+                       style="margin-right: 0px;">
+                <md-icon class="material-icons">menu</md-icon>
+            </md-button>
+            <md-menu-content width="4">
+                <md-menu-item>
+                    <md-button ng-click="reloadList()">
+                        <md-icon class="material-icons">cached</md-icon> обновити
+                    </md-button>
+                </md-menu-item>
+                <md-menu-divider></md-menu-divider>
+                <md-menu-item>
+                    <md-button ng-click="state.enableFilter=!state.enableFilter">
+                        <md-icon class="material-icons">search</md-icon>
+                        {{state.enableFilter ? 'Заховати' : 'Показати' }} панель фільтрів
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+    <div flex>
+        <md-chips ng-model="filterChips" 
+                  readonly="true"
+                  md-removable ="true"
+                  md-on-remove = "deleteChips($chip, $index)">
+            <md-chip-template>
+                <span>
+                    {{$chip.name}}
+                </span>
+            </md-chip-template>
+        </md-chips>
+    </div>
+</div>
+<div layout="row" flex class="main_container">
+    <div ui-view="filter"
+         layout="column"
+         class="filter_outer_container"
+         ng-show="state.enableFilter">
+    </div>
+    <div layout="column" 
+         layout-align="top" 
+         style="padding-left: 10px;"
+         flex>
+        <div class="repeated_cdr_item"
+             layout="row"
+             style="background-color: rgba(200, 229, 241, 0.68);padding-left: 10px;margin-left: -10px;"
+             layout-align="start center">
+            <div>
+                <md-button class="md-icon-button">
+                    <md-tooltip md-direction="top">Статус</md-tooltip>
+                    <md-icon class="material-icons">phone</md-icon>
+                </md-button>
+            </div>
+            <span flex>Дата</span>
+            <span flex>Джерело</span>
+            <span flex>Призначення</span>
+            <span flex>Виклик</span>
+            <span style="width: 382px;">Розмова</span>
+            <md-button ng-disabled="true" style="min-width: 1px;">.....</md-button>
+<!--            <div>
+                <md-button class="md-icon-button">
+                    <md-tooltip md-direction="top">Прослухати</md-tooltip>
+                    <md-icon class="material-icons">audiotrack</md-icon>
+                </md-button>
+            </div>-->
+        </div>
+        <md-virtual-repeat-container id="vertical-container" flex>
+            <div class="repeated_cdr_item"
+                 md-virtual-repeat="item in dynamicItems"
+                 md-on-demand
+                 layout="row"
+                 layout-align="start center"
+                 ng-mouseover="selectChain(item.uniqueid)"
+                 
+                 ng-class="recordInChain(item.uniqueid)?'cdr_chain':''">
+                <div ng-switch="item.disposition" >
+                    <div ng-switch-when="ANSWERED">
+                        <md-button class="md-icon-button">
+                            <md-tooltip md-direction="top">ANSWERED</md-tooltip>
+                            <md-icon class="material-icons"
+                                     style="color: #3b9010">phone</md-icon>
+                        </md-button>
+                    </div>
+                    <div ng-switch-when="NO ANSWER">
+                        <md-button class="md-icon-button">
+                            <md-tooltip md-direction="top">NO ANSWER</md-tooltip>
+                            <md-icon class="material-icons"
+                                     style="color: #ec2f0c">phone</md-icon>
+                        </md-button>
+                    </div>
+                    <div ng-switch-when="BUSY">
+                        <md-button class="md-icon-button">
+                            <md-tooltip md-direction="top">BUSY</md-tooltip>
+                            <md-icon class="material-icons"
+                                     style="color: #20c2e1">phone</md-icon>
+                        </md-button>
+                    </div>
+                    <div ng-switch-when="FAILED">
+                        <md-button class="md-icon-button">
+                            <md-tooltip md-direction="top">FAILED</md-tooltip>
+                            <md-icon class="material-icons"
+                                     style="color: #a2a2a2">phone</md-icon>
+                        </md-button>
+                    </div>
+
+                    <span class="md-icons"
+                          ng-switch-default>{{item.disposition}}</span>
+                </div>
+                <span flex>{{item.calldate | date:"dd.MM.yyyy HH:mm:ss"}}</span>
+                <span flex ng-bind="getManagerByNum(item.src)"></span>
+                <span flex ng-bind="getManagerByNum(item.dst)"></span>
+                <span flex ng-bind="formatSeconds(item.duration)"></span>
+                <div layout="row" style="width: 382px;">
+                    <span flex 
+                          ng-if="!item.playOn" 
+                          ng-bind="formatSeconds(item.billsec)"
+                          ng-click="item.playOn = !item.playOn"></span>
+                    <div ng-if="item.playOn"
+                         class="my_play_cont"
+                         layout="row"
+                         layout-align="start center"
+                         flex>
+                        <audio controls flex>
+                            <source src="{{'./audio/'+item.id}}"/>
+                        </audio>
+                        <md-button class="md-icon-button"
+                                   target="_blank"
+                                   ng-href="./audio/{{item.id}}">
+                            <md-icon class="material-icons">file_download</md-icon>
+                        </md-button>
+                        <md-button class="md-icon-button"
+                                   ng-click="item.playOn = !item.playOn">
+                            <md-icon class="material-icons">clear</md-icon>
+                        </md-button>
+                    </div>
+                </div>
+                <md-button ng-click="showDetailDialog(item)" 
+                           style="min-width: 1px;"><md-tooltip md-direction="top">Деталі</md-tooltip>...</md-button>
+            </div>
+        </md-virtual-repeat-container>
+    </div>
+</div>

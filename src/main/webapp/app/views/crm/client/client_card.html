@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<md-toolbar class="md-theme-light"
+            ng-init="initClient()">
+    <div class="md-toolbar-tools">
+<!--        <md-button ng-click="close()" class="md-fab md-mini">
+            <md-icon class="material-icons">clear</md-icon>
+        </md-button>-->
+        <h1 class="md-toolbar-tools_">{{client.name}}</h1>
+    </div>
+
+</md-toolbar>
+<div layout="row"
+     class="tools_panel">
+    <md-button ng-click="close($event)" 
+               class="md-icon-button">
+        <md-icon class="material-icons">clear</md-icon>
+    </md-button>
+    <md-button class="md-icon-button" 
+               ng-click="saveClient()">
+        <md-icon class="material-icons"
+                 ng-class="hasUnsavedChanges?'focus_on':''">save</md-icon>
+    </md-button>
+    <md-button class="md-icon-button" ng-click="taskService.showAddNewTaskDialog({clients:[client]}, reloadClient)">
+        <md-icon class="material-icons">alarm_add</md-icon>
+    </md-button>
+    <md-button class="md-icon-button" ng-click="dealService.showAddDealDialog({client:client}, reloadClient)">
+        <md-icon class="material-icons">attach_money</md-icon>
+    </md-button>
+    <md-button class="md-icon-button" ng-click="delClient()">
+        <md-icon class="material-icons">delete</md-icon>
+    </md-button>
+</div>
+<md-content layout="column" flex>
+    <md-tabs md-border-bottom class="stretch-height" layout="column" flex>
+        <md-tab label="Інформація">
+            <div layout-fill 
+                 layout="row">
+                <div layout="column" flex>
+                    <md-whiteframe class="md-whiteframe-3dp info_panel"
+                                   layout="column"
+                                   style="padding: 20px;"
+                                   flex>
+                        <div layout="row">
+                            <md-input-container class="md-icon-float md-block" flex>
+                                <!-- Use floating label instead of placeholder -->
+                                <label>Ім'я</label>
+                                <!--<md-icon class="material-icons">person</md-icon>-->
+                                <input ng-model="client.name" type="text">
+                            </md-input-container>
+                            <md-input-container class="md-block" flex>
+                                <label>Менеджер</label>
+                                <md-select ng-model="client.manager" ng-model-options="{trackBy: '$value.id'}">
+                                    <md-option ng-repeat="clientManager in directory.managers track by clientManager.id" ng-value="clientManager">
+                                        <span>{{clientManager.name}}</span>
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div layout="row" class="">
+                            <md-input-container class="md-block" flex>
+                                <label>Тип</label>
+                                <md-select ng-model="client.type" ng-model-options="{trackBy: '$value.id'}">
+                                    <md-option ng-repeat="clientType in directory.types track by clientType.id" ng-value="clientType">
+                                        <md-icon class="material-icons">{{clientType.icon}}</md-icon>
+                                        <span>{{clientType.name}}</span>
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex>
+                                <label>Статус</label>
+                                <md-select ng-model="client.state" ng-model-options="{trackBy: '$value.id'}">
+                                    <md-option ng-repeat="clientState in directory.states track by clientState.id" ng-value="clientState">
+                                        <md-icon class="material-icons">{{clientState.icon}}</md-icon>
+                                        <span>{{clientState.name}}</span>
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+
+                        <div layout="row">
+                            <md-input-container class="md-block" flex>
+                                <label>Примітка</label>
+                                <textarea ng-model="client.comment" md-maxlength="1024" md-select-on-focus></textarea>
+                                <!--rows="5"-->
+                            </md-input-container>
+                        </div>
+                    </md-whiteframe>
+                </div>
+                <div layout="column" flex>
+                    <md-whiteframe class="md-whiteframe-3dp info_panel" 
+                                   layout="column"
+                                   flex>
+                        <md-input-container class="md-padding" layout="row">
+                            <h3 style="margin-top: 10px;">Контакти: </h3>
+                            <md-button class="md-fab md-mini md-primary" 
+                                       aria-label="Add new"
+                                       ng-click="showAddNewContactDialog($event)">
+                                <md-icon class="material-icons">add</md-icon>
+                            </md-button>
+                        </md-input-container>
+                        <md-content flex>
+                            <md-list>
+                                <md-divider></md-divider>
+                                <div ng-repeat="contact in client.contacts | orderBy:'id'">
+                                    <md-list-item class="md-2-line"
+                                                  ng-click="null"
+                                                  layout="row">
+                                        <md-icon class="material-icons md-avatar-icon">{{contact.type.icon}}</md-icon>
+                                        <div flex>
+                                            <div class="md-list-item-text">
+                                                <h3>{{ contact.contact}}</h3>
+                                                <p>{{ contact.comment }}</p>
+                                            </div>
+                                        </div>
+                                        <md-button class="md-icon-button"
+                                                   ng-if="contact.type.callable"
+                                                   ng-click="callService.callTo(contact.contact)">
+                                            <md-icon>call</md-icon>
+                                        </md-button>
+                                        <md-button class="md-icon-button"
+                                                   ng-click="showAddNewContactDialog($event, $index)">
+                                            <md-icon>mode_edit</md-icon>
+                                        </md-button>
+                                        <md-button class="md-icon-button"
+                                                   ng-click="deleteContact($index)">
+                                            <md-icon>delete</md-icon>
+                                        </md-button>
+                                    </md-list-item>
+                                    <md-divider></md-divider>
+                                </div>
+                            </md-list>
+<!--                            <md-card ng-repeat="contact in client.contacts"
+                                     layout="row"
+                                     md-theme="default">
+                                <md-card-header>
+                                    <md-card-avatar>
+                                        <md-icon class="">{{contact.type.icon}}</md-icon>
+                                    </md-card-avatar>
+                                </md-card-header>
+                                <div flex="60">
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                            <span class="md-headline">{{contact.contact}}</span>
+                                            <span class="md-subhead description">{{contact.comment}}</span>
+                                        </md-card-title-text>
+                                    </md-card-title>
+                                </div>
+                                <div layout="row"
+                                     layout-align="center center"
+                                     flex>
+                                    <span flex></span>
+                                    <md-card-actions layout="row"
+                                                     layout-align="center center">
+                                      <md-button class="md-icon-button"
+                                                 ng-click="showAddNewContactDialog($event, $index)">
+                                        <md-icon class=" md-avatar_">mode_edit</md-icon>
+                                      </md-button>
+                                      <md-button class="md-icon-button"
+                                                 ng-click="deleteContact($index)">
+                                        <md-icon class=" md-avatar_">delete</md-icon>
+                                      </md-button>
+                                    </md-card-actions>
+                                </div>
+                          </md-card>-->
+                        </md-content>
+                        <!--<pre>{{user|json}}</pre>-->
+                    </md-whiteframe>
+                </div>
+            </div>
+        </md-tab>
+        <md-tab label="Задачі" flex layout="row" ng-disabled="false">
+            <div layout-fill layout="row">
+                <md-content flex>
+                    <md-list flex>
+                        <div ng-repeat="task in client.tasks">
+                            <md-list-item class="md-3-line" 
+                                          ng-click="taskService.showAddNewTaskDialog(task, reloadClient)">
+                                <md-icon class="material-icons">alarm</md-icon>
+                                <div class="md-list-item-text" layout="column">
+                                    <h3>№{{task.id}} {{task.type.name}}</h3>
+                                    <h4>{{task.date| date : "HH:mm dd.MM.yyyy"}}</h4>
+                                    <p>{{task.text}}</p>
+                                </div>
+                                <span class="md-secondary" style="margin-right: 15px;">{{task.state.name}}</span>
+                            </md-list-item>
+                            <md-divider></md-divider>
+                        </div>
+                    </md-list>
+                </md-content>
+            </div>
+        </md-tab>
+        <md-tab label="Коментарі" flex layout="row">
+            <div layout-fill layout="row">
+                <div layout-fill layout="column">
+                    <md-whiteframe class="md-whiteframe-4dp"
+                                   style="margin: 10px;padding: 10px;">
+                        <md-input-container class="md-block"
+                                            style="margin-bottom: 0px;">
+                            <label>Коментар</label>
+                            <textarea ng-model="currComment" 
+                                      md-maxlength="1024" 
+                                      rows="2" 
+                                      md-select-on-focus
+                                      style="max-height: 80px;overflow-y: auto;"></textarea>
+                        </md-input-container>
+                        <md-button ng-click="addNotice(currComment)"
+                                   ng-disabled="!currComment">Додати коментар</md-button>
+                    </md-whiteframe>
+                    <md-content flex>
+                        <md-list flex>
+                            <div ng-repeat="notice in notices">
+                                <md-list-item class="md-3-line" ng-click="null">
+                                    <!--<img ng-src="{{notice.face}}?{{$index}}" class="md-avatar" alt="{{notice.who}}" />-->
+                                    <md-icon class="material-icons md-avatar-icon">person</md-icon>
+                                    <div class="md-list-item-text" layout="column">
+                                        <h3>{{ notice.manager.name}}</h3>
+                                        <h4>{{ notice.dtIn | date : "dd.MM.yyyy HH:mm"}}</h4>
+                                        <p>{{ notice.text }}</p>
+                                    </div>
+                                    <md-button class="md-secondary md-icon-button" 
+                                               ng-click="delNotice(notice.id)">
+                                        <md-icon class="material-icons">delete</md-icon>
+                                    </md-button>
+                                </md-list-item>
+                                <md-divider></md-divider>
+                            </div>
+                        </md-list>
+                    </md-content>
+                </div>
+            </div>
+        </md-tab>
+        <md-tab label="Угоди" flex layout="row" ng-disabled="false">
+            <div layout-fill layout="row">
+                <md-content flex>
+                    <md-list flex>
+                        <div ng-repeat="deal in client.deals">
+                            <md-list-item class="md-3-line" 
+                                          ng-click="dealService.showAddDealDialog(deal, reloadClient)">
+                                <md-icon class="material-icons md-avatar-icon">attach_money</md-icon>
+                                <div class="md-list-item-text" layout="column">
+                                    <h3>№{{deal.id}} {{ deal.type.name}}</h3>
+                                    <h4>{{deal.name}}</h4>
+                                    <p>{{deal.comment}}</p>
+                                </div>
+                                <span class="md-secondary"
+                                      style="margin-right: 15px;">{{deal.state.name}}</span>
+<!--                                <md-button class="md-secondary md-icon-button" 
+                                           ng-click="delNotice(notice.id)">
+                                    <md-icon class="material-icons">delete</md-icon>
+                                </md-button>-->
+                            </md-list-item>
+                            <md-divider></md-divider>
+                        </div>
+                    </md-list>
+                </md-content>
+            </div>
+        </md-tab>
+        <md-tab label="Дзвінки" flex layout="row" ng-click="showCallsFun()">
+            <div layout-fill layout="column">
+                <md-button ng-if="!showCalls">Завантажити дзвінки</md-button>
+                <div layout="column"
+                     ng-if="showCalls"
+                     ng-init="initCallsList()"
+                     layout-align="top"
+                     style="padding-left: 10px;"
+                     flex>
+                    <div class="repeated_cdr_item"
+                         layout="row"
+                         style="background-color: rgba(200, 229, 241, 0.68);padding-left: 10px;margin-left: -10px;"
+                         layout-align="start center">
+                        <div>
+                            <md-button class="md-icon-button">
+                                <md-tooltip md-direction="top">Статус</md-tooltip>
+                                <md-icon class="material-icons">phone</md-icon>
+                            </md-button>
+                        </div>
+                        <span flex>Дата</span>
+                        <span flex>Джерело</span>
+                        <span flex>Призначення</span>
+                        <span flex>Виклик</span>
+                        <span flex="30">Розмова</span>
+                        <md-button ng-disabled="true" style="min-width: 1px;">.....</md-button>
+                    </div>
+                    <md-virtual-repeat-container id="vertical-container" flex>
+                        <div class="repeated_cdr_item"
+                             md-virtual-repeat="item in dynamicCallItems"
+                             md-on-demand
+                             layout="row"
+                             layout-align="start center"
+                             ng-mouseover="selectChain(item.uniqueid)"
+
+                             ng-class="recordInChain(item.uniqueid)?'cdr_chain':''">
+                            <div ng-switch="item.disposition" >
+                                <div ng-switch-when="ANSWERED">
+                                    <md-button class="md-icon-button">
+                                        <md-tooltip md-direction="top">ANSWERED</md-tooltip>
+                                        <md-icon class="material-icons"
+                                                 style="color: #3b9010">phone</md-icon>
+                                    </md-button>
+                                </div>
+                                <div ng-switch-when="NO ANSWER">
+                                    <md-button class="md-icon-button">
+                                        <md-tooltip md-direction="top">NO ANSWER</md-tooltip>
+                                        <md-icon class="material-icons"
+                                                 style="color: #ec2f0c">phone</md-icon>
+                                    </md-button>
+                                </div>
+                                <div ng-switch-when="BUSY">
+                                    <md-button class="md-icon-button">
+                                        <md-tooltip md-direction="top">BUSY</md-tooltip>
+                                        <md-icon class="material-icons"
+                                                 style="color: #20c2e1">phone</md-icon>
+                                    </md-button>
+                                </div>
+                                <div ng-switch-when="FAILED">
+                                    <md-button class="md-icon-button">
+                                        <md-tooltip md-direction="top">FAILED</md-tooltip>
+                                        <md-icon class="material-icons"
+                                                 style="color: #a2a2a2">phone</md-icon>
+                                    </md-button>
+                                </div>
+
+                                <span class="md-icons"
+                                      ng-switch-default>{{item.disposition}}</span>
+                            </div>
+                            <span flex>{{item.calldate | date:"dd.MM.yyyy HH:mm:ss"}}</span>
+                            <span flex ng-bind="getManagerByNum(item.src)"></span>
+                            <span flex ng-bind="getManagerByNum(item.dst)"></span>
+                            <span flex ng-bind="formatSeconds(item.duration)"></span>
+                            <div flex="30">
+                                <span flex 
+                                      ng-if="!item.playOn" 
+                                      ng-bind="formatSeconds(item.billsec)"
+                                      ng-click="item.playOn = !item.playOn"></span>
+                                <div ng-if="item.playOn"
+                                     layout="row"
+                                     layout-align="start center">
+                                    <audio controls >
+                                        <source src="{{item.filename||'./lyalyalya'}}"/>
+                                    </audio>
+                                    <md-button class="md-icon-button"
+                                               ng-click="item.playOn = !item.playOn">
+                                        <md-icon class="material-icons">clear</md-icon>
+                                    </md-button>
+                                </div>
+                            </div>
+                            <md-button ng-click="showDetailDialog(item)" 
+                                       style="min-width: 1px;"><md-tooltip md-direction="top">Деталі</md-tooltip>...</md-button>
+                        </div>
+                    </md-virtual-repeat-container>
+                </div>
+            </div>
+        </md-tab>
+        <md-tab label=" " ng-disabled="true"></md-tab>
+    </md-tabs>
+</md-content>
